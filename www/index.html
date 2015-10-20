@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    
+    <script src="cordova.js"></script>
+    <script src="lib/moment/moment.js"></script>
+	<script src="lib/angular-moment/angular-moment.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+  <body ng-app="starter" ng-controller="RedditCtrl">
+
+    <ion-pane>
+      <ion-header-bar class="bar-assertive">
+       	<img src="../img/reddit9.png">
+        <h1 class="title">Reddit TimeLine</h1>
+      </ion-header-bar>
+      <ion-content>
+      <ion-refresher
+      	pulling-text="Pull to refresh..."
+      	on-refresh="cargarPost()">
+      	
+      </ion-refresher>
+      <div class="list">
+      	<a class="item item-avatar-left" ng-repeat="post in posts" ng-click="openLink(post.url)">
+      		<img ng-src="{{post.thumbnail}}" ng-if="post.thumbnail.indexOf('http') == 0" />
+      		<h2 class="post-title">{{ post.title }} </h2> 
+			<p>
+    			<span am-time-ago="post.created_utc" am-preprocess="unix"></span>
+     			- {{post.subreddit}}
+     		</p>
+      	</a>
+      </div>
+      	<ion-infinite-scroll
+      		on-infinite="cargarNuevos()"
+      		distance="1%">
+      	</ion-infinite-scroll>
+      </ion-content>
+    </ion-pane>
+  </body>
+</html>
